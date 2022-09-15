@@ -3,14 +3,14 @@ import './App.css';
 import CardElement from './components/CardElement.js';
 
 const wonderImages = [
-  { src: '/img/svg/burj-21991.svg', match: false },
-  { src: '/img/svg/chichen-21990.svg', match: false },
-  { src: '/img/svg/colosseum-21986.svg', match: false },
-  { src: '/img/svg/egyptian-21984.svg', match: false },
-  { src: '/img/svg/eiffel-21992.svg', match: false },
-  { src: '/img/svg/gateway-21987.svg', match: false },
-  { src: '/img/svg/hotel-21985.svg', match: false },
-  { src: '/img/svg/sydney-21983.svg', match: false },
+  { src: './img/svg/burj-21991.svg', match: false },
+  { src: './img/svg/chichen-21990.svg', match: false },
+  { src: './img/svg/colosseum-21986.svg', match: false },
+  { src: './img/svg/egyptian-21984.svg', match: false },
+  { src: './img/svg/eiffel-21992.svg', match: false },
+  { src: './img/svg/gateway-21987.svg', match: false },
+  { src: './img/svg/hotel-21985.svg', match: false },
+  { src: './img/svg/sydney-21983.svg', match: false },
 ];
 
 function App() {
