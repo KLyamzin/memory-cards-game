@@ -1,9 +1,11 @@
 import React from 'react';
 import './CardElement.css';
 
-export default function CardElement({ card, handleChoice, flipped }) {
+export default function CardElement({ card, handleChoice, flipped, disabled }) {
   const handleClick = () => {
-    handleChoice(card);
+    if (!disabled) {
+      handleChoice(card);
+    }
   };
   return (
     <div className="card">

@@ -18,6 +18,7 @@ function App() {
   const [turns, setTurns] = useState(0);
   const [choiceOne, setChoiceOne] = useState(null);
   const [choiceTwo, setChoiceTwo] = useState(null);
+  const [disabled, setDisabled] = useState(false);
 
   // shuffle the cars in random
   const randomizeCards = () => {
@@ -25,6 +26,8 @@ function App() {
       .sort(() => Math.random() - 0.5)
       .map((card) => ({ ...card, id: Math.random() }));
     setCards(randomize);
+    setChoiceOne(null);
+    setChoiceTwo(null);
     setTurns(0);
   };
 
@@ -36,10 +39,12 @@ function App() {
     setChoiceOne(null);
     setChoiceTwo(null);
     setTurns((prev) => prev + 1);
+    setDisabled(false);
   };
   // if both choices are set, find their src, if they match - assign `match: true`
   useEffect(() => {
     if (choiceOne && choiceTwo) {
+      setDisabled(true);
       if (choiceOne.src === choiceTwo.src) {
         setCards((prev) => {
           return prev.map((card) => {
@@ -57,10 +62,13 @@ function App() {
     }
   }, [choiceOne, choiceTwo]);
 
+  useEffect(() => {
+    randomizeCards();
+  }, []);
   return (
     <div className="App">
       <h1>Wonders Of The World</h1>
-      <p>{turns}</p>
+      <p>Turns: {turns}</p>
       <button onClick={randomizeCards}>New Game</button>
       <div className="card-grid">
         {cards.map((card) => (
@@ -69,6 +77,7 @@ function App() {
             card={card}
             handleChoice={handleChoice}
             flipped={card === choiceOne || card === choiceTwo || card.match}
+            disabled={disabled}
           />
         ))}
       </div>
