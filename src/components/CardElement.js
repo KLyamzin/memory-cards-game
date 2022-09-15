@@ -14,7 +14,7 @@ export default function CardElement({ card, handleChoice, flipped, disabled }) {
         <img
           className="back"
           alt="card back"
-          src="/img/svg/favorite.svg"
+          src="./img/svg/favorite.svg"
           onClick={handleClick}
         />
       </div>
