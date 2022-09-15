@@ -27,27 +27,36 @@ function App() {
     setCards(randomize);
     setTurns(0);
   };
+
   const handleChoice = (card) => {
     !choiceOne ? setChoiceOne(card) : setChoiceTwo(card);
   };
-
-  useEffect(() => {
-    if (choiceOne && choiceTwo) {
-      if (choiceOne.src === choiceTwo.src) {
-        console.log('Match');
-        resetTurns();
-      } else {
-        console.log('No Match');
-        resetTurns();
-      }
-    }
-  }, [choiceOne, choiceTwo]);
 
   const resetTurns = () => {
     setChoiceOne(null);
     setChoiceTwo(null);
     setTurns((prev) => prev + 1);
   };
+  // if both choices are set, find their src, if they match - assign `match: true`
+  useEffect(() => {
+    if (choiceOne && choiceTwo) {
+      if (choiceOne.src === choiceTwo.src) {
+        setCards((prev) => {
+          return prev.map((card) => {
+            if (card.src === choiceOne.src) {
+              return { ...card, match: true };
+            } else {
+              return card;
+            }
+          });
+        });
+        resetTurns();
+      } else {
+        setTimeout(() => resetTurns(), 1000);
+      }
+    }
+  }, [choiceOne, choiceTwo]);
+
   return (
     <div className="App">
       <h1>Wonders Of The World</h1>
@@ -55,7 +64,12 @@ function App() {
       <button onClick={randomizeCards}>New Game</button>
       <div className="card-grid">
         {cards.map((card) => (
-          <CardElement key={card.id} card={card} handleChoice={handleChoice} />
+          <CardElement
+            key={card.id}
+            card={card}
+            handleChoice={handleChoice}
+            flipped={card === choiceOne || card === choiceTwo || card.match}
+          />
         ))}
       </div>
     </div>
