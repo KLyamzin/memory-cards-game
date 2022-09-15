@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
-import { CardElement } from './components/CardElement.js';
+import CardElement from './components/CardElement.js';
 
 const wonderImages = [
   { src: '/img/svg/burj-21991.svg', match: false },
@@ -16,6 +16,8 @@ const wonderImages = [
 function App() {
   const [cards, setCards] = useState([]);
   const [turns, setTurns] = useState(0);
+  const [choiceOne, setChoiceOne] = useState(null);
+  const [choiceTwo, setChoiceTwo] = useState(null);
 
   // shuffle the cars in random
   const randomizeCards = () => {
@@ -25,14 +27,35 @@ function App() {
     setCards(randomize);
     setTurns(0);
   };
-  console.log(cards, turns);
+  const handleChoice = (card) => {
+    !choiceOne ? setChoiceOne(card) : setChoiceTwo(card);
+  };
+
+  useEffect(() => {
+    if (choiceOne && choiceTwo) {
+      if (choiceOne.src === choiceTwo.src) {
+        console.log('Match');
+        resetTurns();
+      } else {
+        console.log('No Match');
+        resetTurns();
+      }
+    }
+  }, [choiceOne, choiceTwo]);
+
+  const resetTurns = () => {
+    setChoiceOne(null);
+    setChoiceTwo(null);
+    setTurns((prev) => prev + 1);
+  };
   return (
     <div className="App">
       <h1>Wonders Of The World</h1>
+      <p>{turns}</p>
       <button onClick={randomizeCards}>New Game</button>
       <div className="card-grid">
         {cards.map((card) => (
-          <CardElement key={card.id} card={card} />
+          <CardElement key={card.id} card={card} handleChoice={handleChoice} />
         ))}
       </div>
     </div>
